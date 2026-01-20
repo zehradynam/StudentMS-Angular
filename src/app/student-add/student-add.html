@@ -1,0 +1,39 @@
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Add New Student</h4>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="studentForm" (ngSubmit)="addstudent()">
+
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input class="form-control" placeholder="Enter Name" formControlName="name">
+                    <div class="text-danger"
+                        *ngIf="studentForm.get('name')?.invalid && studentForm.get('name')?.touched">
+                        Name is required
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Age</label>
+                    <input class="form-control" placeholder="Enter Age" formControlName="age" type="number">
+                    <div class="text-danger" *ngIf="studentForm.get('age')?.invalid && studentForm.get('age')?.touched">
+                        Age is required
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" placeholder="Enter Email" formControlName="email" type="email">
+                    <div class="text-danger"
+                        *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched">
+                        Valid email is required
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit" [disabled]="studentForm.invalid">Add Student</button>
+            </form>
+        </div>
+    </div>
+</div>

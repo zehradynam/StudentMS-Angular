@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/home">
+            <img src="https://cdn-icons-png.flaticon.com/512/3976/3976625.png" alt="Logo" style="width: 32px;">
+            <span class="fw-semibold">StudentHub</span>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto gap-3">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home" routerLinkActive="text-primary fw-semibold"
+                        [routerLinkActiveOptions]="{exact: true}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/students-list" routerLinkActive="text-primary fw-semibold">Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/student-add" routerLinkActive="text-primary fw-semibold">Add Student</a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3 ms-lg-4">
+                <a *ngIf="!authState.loggedIn()" routerLink="/login" class="btn btn-dark btn-sm px-3">
+                    Sign In
+                </a>
+
+                <div class="d-flex align-items-center gap-2" *ngIf="authState.loggedIn()">
+                    <a routerLink="/login" class="text-muted small d-none d-md-block text-decoration-none">{{ authState.getMail() }}</a>
+                    <button class="btn btn-outline-dark btn-sm" (click)="logout()" routerLink="/login">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <router-outlet></router-outlet>
+</main>
