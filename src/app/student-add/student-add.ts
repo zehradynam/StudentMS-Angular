@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Studentservice } from '../services/student';
 import { AuthState } from '../services/auth-state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-add',
@@ -17,7 +18,8 @@ export class StudentAdd {
   constructor(
     private fb: FormBuilder,
     private Studentservice: Studentservice,
-    public authState: AuthState
+    public authState: AuthState,
+    private router: Router
   ) {
     this.studentForm = this.fb.group({
       name: ['', Validators.required],
@@ -27,7 +29,10 @@ export class StudentAdd {
   }
 
   addstudent() {
-    this.Studentservice.addStudents(this.studentForm.value).subscribe(() => {
-    })
+    this.Studentservice.addStudents(this.studentForm.value).subscribe({
+      next: (data) => {console.log('Student added successfully', data);
+        this.router.navigate(['/students-list']);},
+        'error': (error) => console.error('Error adding student', error)
+          })
   }
 }
