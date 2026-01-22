@@ -13,20 +13,33 @@ import { RouterLink } from '@angular/router';
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class Login {
+export class Login
+{
 
   userData: User = {} as User;
-  showError=signal<boolean>(false);
+  showError = signal<boolean>(false);
 
 
   constructor(
     private userService: UserService,
     public authState: AuthState
-  ) {}
+  ) { }
+
+  signUp() {
+    console.log('I am In:' + this.userData);
+    this.userService.signUp(this.userData).subscribe({
+      next: () => console.log('User signed up successfully'),
+      error: (err) => console.error('User sign up failed:', err)
+    })
+  }
+
+
+
+
 
   login() {
-    console.log("iss logged in :" ,this.showError());
-    console.log('I am In:'+ this.userData);
+    console.log("iss logged in :", this.showError());
+    console.log('I am In:' + this.userData);
     this.userService.loginUser(this.userData).subscribe({
       next: (res) => {
         if (res && res.token) {

@@ -4,6 +4,33 @@
 </div>
 
 
+
+<div class=" container signup">
+    <h1>Sign Up</h1>
+    <form (ngSubmit)="signUp()">
+        <div class="form-outline mb-4">
+            <input type="text" [(ngModel)]="userData.name" name="name" id="signupName" class="form-control" required />
+            <label class="form-label" for="signupName">Full Name</label>
+        </div>
+
+        <div class="form-outline mb-4">
+            <input type="email" [(ngModel)]="userData.email" name="email" id="signupEmail" class="form-control"
+                required />
+            <label class="form-label" for="signupEmail">Email</label>
+        </div>
+        <div class="form-outline mb-4">
+            <input type="password" [(ngModel)]="userData.password" name="password" id="signupPassword"
+                class="form-control" required />
+            <label class="form-label" for="signupPassword">Password</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+    </form>
+</div>
+
+
+
+
+
 <div *ngIf="!authState.loggedIn() else dashboard" class="container">
     <h1>Login Here</h1>
 
@@ -25,6 +52,8 @@
     </form>
 
 </div>
+
+
 
 
 
