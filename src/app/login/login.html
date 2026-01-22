@@ -1,62 +1,85 @@
+<div class="min-vh-100 d-flex align-items-center py-5 bg-light">
+    <div class="container">
+        <!-- Error and Success Messages -->
+        <div *ngIf="showError()" class="row justify-content-center mb-4">
+            <div class="col-md-10">
+                <div class="alert alert-danger mb-0">
+                    Login Failed - Please check your credentials
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showSuccess()" class="row justify-content-center mb-4">
+            <div class="col-md-10">
+                <div class="alert alert-success mb-0">
+                    Account has been created successfully.
+                </div>
+            </div>
+        </div>
 
-<div  *ngIf="showError()" class="container mt-3">
-    <div class="alert alert-danger">Login Failed - Please check your credentials</div>
+        <div *ngIf="!authState.loggedIn() else dashboard" class="row justify-content-center align-items-stretch g-4">
+            <!-- Login Form (Left) -->
+            <div class="col-md-5 d-flex">
+                <div class="card border-0 shadow-sm w-100">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h2 class="text-center mb-0">Login</h2>
+                    </div>
+                    <div class="card-body p-4 p-md-5 d-flex flex-column">
+                        <form (ngSubmit)="login()" class="flex-grow-1 d-flex flex-column">
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label">Your Email *</label>
+                                <input type="email" [(ngModel)]="userData.email" name="email" id="loginEmail" 
+                                       class="form-control form-control-lg" required />
+                            </div>
+                            <div class="mb-4">
+                                <label for="loginPassword" class="form-label">Your Password *</label>
+                                <input type="password" [(ngModel)]="userData.password" name="password" 
+                                       id="loginPassword" class="form-control form-control-lg" required />
+                            </div>
+                            <div class="mt-auto">
+                                <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Login</button>
+                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sign Up Form (Right) -->
+            <div class="col-md-5 d-flex">
+                <div class="card border-0 shadow w-100" style="border-top: 4px solid #0d6efd !important;">
+                    <div class="card-header bg-white py-3">
+                        <h2 class="text-center mb-0 text-primary">Sign Up</h2>
+                    </div>
+                    <div class="card-body p-4 p-md-5 d-flex flex-column" style="background-color: #f8f9ff;">
+                        <form (ngSubmit)="signUp()" class="flex-grow-1 d-flex flex-column">
+                            <div class="mb-3">
+                                <label for="signupName" class="form-label">Full Name *</label>
+                                <input type="text" [(ngModel)]="signupData.name" name="name" id="signupName" 
+                                       class="form-control form-control-lg" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="signupEmail" class="form-label">Your Email *</label>
+                                <input type="email" [(ngModel)]="signupData.email" name="email" id="signupEmail" 
+                                       class="form-control form-control-lg" required />
+                            </div>
+                            <div class="mb-4">
+                                <label for="signupPassword" class="form-label">Your Password *</label>
+                                <input type="password" [(ngModel)]="signupData.password" name="password" 
+                                       id="signupPassword" class="form-control form-control-lg" required />
+                            </div>
+                            <div class="mt-auto">
+                                <button type="submit" class="btn w-100 py-2 mb-3" style="background: linear-gradient(45deg, #0d6efd, #0b5ed7); color: white; border: none;">Sign Up</button>
+                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-
-<div class=" container signup">
-    <h1>Sign Up</h1>
-    <form (ngSubmit)="signUp()">
-        <div class="form-outline mb-4">
-            <input type="text" [(ngModel)]="userData.name" name="name" id="signupName" class="form-control" required />
-            <label class="form-label" for="signupName">Full Name</label>
-        </div>
-
-        <div class="form-outline mb-4">
-            <input type="email" [(ngModel)]="userData.email" name="email" id="signupEmail" class="form-control"
-                required />
-            <label class="form-label" for="signupEmail">Email</label>
-        </div>
-        <div class="form-outline mb-4">
-            <input type="password" [(ngModel)]="userData.password" name="password" id="signupPassword"
-                class="form-control" required />
-            <label class="form-label" for="signupPassword">Password</label>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
-    </form>
-</div>
-
-
-
-
-
-<div *ngIf="!authState.loggedIn() else dashboard" class="container">
-    <h1>Login Here</h1>
-
-    <form (ngSubmit)="login()">
-        <!-- Email input -->
-        <div class="form-outline mb-4">
-            <input type="email" [(ngModel)]="userData.email" name="email" id="loginEmail" class="form-control"
-                required />
-            <label class="form-label" for="loginEmail">Email</label>
-        </div>
-        <!-- Password input -->
-        <div class="form-outline mb-4">
-            <input type="password" [(ngModel)]="userData.password" name="password" id="loginPassword"
-                class="form-control" required />
-            <label class="form-label" for="loginPassword">Password</label>
-        </div>
-        <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-    </form>
-
-</div>
-
-
-
-
-
+<!-- Dashboard template -->
 <ng-template #dashboard>
     <div class="bg-light min-vh-100 py-5">
         <div class="container">
@@ -80,8 +103,10 @@
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="bg-primary bg-opacity-10 rounded-3 p-3 me-3">
-                                            <svg width="24" height="24" fill="currentColor" class="text-primary" viewBox="0 0 16 16">
-                                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                                            <svg width="24" height="24" fill="currentColor" class="text-primary"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
                                             </svg>
                                         </div>
                                         <div>
@@ -98,9 +123,12 @@
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="bg-success bg-opacity-10 rounded-3 p-3 me-3">
-                                            <svg width="24" height="24" fill="currentColor" class="text-success" viewBox="0 0 16 16">
-                                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
-                                                <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                                            <svg width="24" height="24" fill="currentColor" class="text-success"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+                                                <path
+                                                    d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z" />
                                             </svg>
                                         </div>
                                         <div>
@@ -117,8 +145,10 @@
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="bg-secondary bg-opacity-10 rounded-3 p-3 me-3">
-                                            <svg width="24" height="24" fill="currentColor" class="text-secondary" viewBox="0 0 16 16">
-                                                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+                                            <svg width="24" height="24" fill="currentColor" class="text-secondary"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
                                             </svg>
                                         </div>
                                         <div>
@@ -131,13 +161,17 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="card border-0 shadow-sm h-100" style="cursor: pointer;" (click)="authState.logout()">
+                            <div class="card border-0 shadow-sm h-100" style="cursor: pointer;"
+                                (click)="authState.logout()">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="bg-danger bg-opacity-10 rounded-3 p-3 me-3">
-                                            <svg width="24" height="24" fill="currentColor" class="text-danger" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                                                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                            <svg width="24" height="24" fill="currentColor" class="text-danger"
+                                                viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
                                             </svg>
                                         </div>
                                         <div>

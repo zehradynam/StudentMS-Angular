@@ -10,14 +10,16 @@ import { RouterLink } from '@angular/router';
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, CommonModule, RouterLink],
-  templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  templateUrl: './login.html'
 })
 export class Login
 {
 
   userData: User = {} as User;
   showError = signal<boolean>(false);
+  showSuccess = signal<boolean>(false);
+
+  signupData: User = {} as User;
 
 
   constructor(
@@ -26,25 +28,34 @@ export class Login
   ) { }
 
   signUp() {
-    console.log('I am In:' + this.userData);
-    this.userService.signUp(this.userData).subscribe({
-      next: () => console.log('User signed up successfully'),
-      error: (err) => console.error('User sign up failed:', err)
-    })
+     console.log('I am In:' + JSON.stringify(this.signupData));
+  this.userService.signUp(this.signupData).subscribe({
+    next: () => {
+      console.log('User signed up successfully')
+      this.showSuccess.set(true);
+      this.showError.set(false);
+    },
+    error: (err) => {
+      console.error('User sign up failed:', err);
+      if (err.error.errors) {
+        console.error('Validation Errors:', err.error.errors);
+      }
+    }
+  });
   }
-
-
 
 
 
   login() {
     console.log("iss logged in :", this.showError());
-    console.log('I am In:' + this.userData);
+    console.log('I am In:' + JSON.stringify(this.userData));
     this.userService.loginUser(this.userData).subscribe({
       next: (res) => {
         if (res && res.token) {
           this.authState.login(res.token)
           this.showError.set(false);
+          this.showSuccess.set(false);
+
         }
       },
       error: (err) => {
