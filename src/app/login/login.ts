@@ -14,11 +14,11 @@ import { RouterLink } from '@angular/router';
 })
 export class Login
 {
-
   userData: User = {} as User;
   showError = signal<boolean>(false);
   showSuccess = signal<boolean>(false);
-
+  showLoginPassword = false;
+  showSignupPassword = false;
   signupData: User = {} as User;
 
 
@@ -45,6 +45,14 @@ export class Login
   }
 
 
+
+  toggleLoginPassword() {
+    this.showLoginPassword = !this.showLoginPassword;
+  }
+
+  toggleSignupPassword() {
+    this.showSignupPassword = !this.showSignupPassword;
+  }
 
   login() {
     console.log("iss logged in :", this.showError());

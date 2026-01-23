@@ -17,26 +17,33 @@
         </div>
 
         <div *ngIf="!authState.loggedIn() else dashboard" class="row justify-content-center align-items-stretch g-4">
-            <!-- Login Form (Left) -->
+            <!-- Login Form -->
             <div class="col-md-5 d-flex">
-                <div class="card border-0 shadow-sm w-100">
-                    <div class="card-header bg-primary text-white py-3">
-                        <h2 class="text-center mb-0">Login</h2>
+                <div class="card shadow-sm w-100">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="text-center m-0 py-2">Login</h2>
                     </div>
-                    <div class="card-body p-4 p-md-5 d-flex flex-column">
-                        <form (ngSubmit)="login()" class="flex-grow-1 d-flex flex-column">
-                            <div class="mb-3">
-                                <label for="loginEmail" class="form-label">Your Email *</label>
-                                <input type="email" [(ngModel)]="userData.email" name="email" id="loginEmail" 
-                                       class="form-control form-control-lg" required />
+                    <div class="card-body p-4 d-flex flex-column">
+                        <form (ngSubmit)="login()" class="d-flex flex-column h-100">
+                            <div class="flex-grow-1">
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Your Email *</label>
+                                    <input type="email" [(ngModel)]="userData.email" name="email" id="loginEmail" 
+                                           class="form-control form-control-lg" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="loginPassword" class="form-label">Your Password *</label>
+                                    <div class="input-group">
+                                        <input [type]="showLoginPassword ? 'text' : 'password'" [(ngModel)]="userData.password" 
+                                               name="password" id="loginPassword" class="form-control form-control-lg" required>
+                                        <button class="btn btn-outline-secondary" type="button" (click)="toggleLoginPassword()" style="width: 40px;">
+                                            <i [class]="showLoginPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-4">
-                                <label for="loginPassword" class="form-label">Your Password *</label>
-                                <input type="password" [(ngModel)]="userData.password" name="password" 
-                                       id="loginPassword" class="form-control form-control-lg" required />
-                            </div>
-                            <div class="mt-auto">
-                                <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Login</button>
+                            <div>
+                                <button type="submit" class="btn btn-primary w-100 mb-3 py-2">Login</button>
                                
                             </div>
                         </form>
@@ -44,31 +51,40 @@
                 </div>
             </div>
 
-            <!-- Sign Up Form (Right) -->
+            <!-- Sign Up Form -->
             <div class="col-md-5 d-flex">
-                <div class="card border-0 shadow w-100" style="border-top: 4px solid #0d6efd !important;">
-                    <div class="card-header bg-white py-3">
-                        <h2 class="text-center mb-0 text-primary">Sign Up</h2>
+                <div class="card shadow-sm w-100">
+                    <div class="card-header bg-white">
+                        <h2 class="text-center text-primary m-0 py-2">Sign Up</h2>
                     </div>
-                    <div class="card-body p-4 p-md-5 d-flex flex-column" style="background-color: #f8f9ff;">
-                        <form (ngSubmit)="signUp()" class="flex-grow-1 d-flex flex-column">
-                            <div class="mb-3">
-                                <label for="signupName" class="form-label">Full Name *</label>
-                                <input type="text" [(ngModel)]="signupData.name" name="name" id="signupName" 
-                                       class="form-control form-control-lg" required />
+                    <div class="card-body p-4 d-flex flex-column">
+                        <form (ngSubmit)="signUp()" class="d-flex flex-column h-100">
+                            <div class="flex-grow-1">
+                                <div class="mb-3">
+                                    <label for="signupName" class="form-label">Full Name *</label>
+                                    <input type="text" [(ngModel)]="signupData.name" name="name" id="signupName" 
+                                           class="form-control form-control-lg" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupEmail" class="form-label">Your Email *</label>
+                                    <input type="email" [(ngModel)]="signupData.email" name="email" id="signupEmail" 
+                                           class="form-control form-control-lg" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="signupPassword" class="form-label">Your Password *</label>
+                                    <div class="input-group">
+                                        <input [type]="showSignupPassword ? 'text' : 'password'" [(ngModel)]="signupData.password" 
+                                               name="password" id="signupPassword" class="form-control form-control-lg" required>
+                                        <button class="btn btn-outline-secondary" type="button" (click)="toggleSignupPassword()" style="width: 40px;">
+                                            <i [class]="showSignupPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="signupEmail" class="form-label">Your Email *</label>
-                                <input type="email" [(ngModel)]="signupData.email" name="email" id="signupEmail" 
-                                       class="form-control form-control-lg" required />
-                            </div>
-                            <div class="mb-4">
-                                <label for="signupPassword" class="form-label">Your Password *</label>
-                                <input type="password" [(ngModel)]="signupData.password" name="password" 
-                                       id="signupPassword" class="form-control form-control-lg" required />
-                            </div>
-                            <div class="mt-auto">
-                                <button type="submit" class="btn w-100 py-2 mb-3" style="background: linear-gradient(45deg, #0d6efd, #0b5ed7); color: white; border: none;">Sign Up</button>
+                            <div>
+                                <button type="submit" class="btn btn-primary w-100 mb-3 py-2">
+                                    Sign Up
+                                </button>
                                
                             </div>
                         </form>
