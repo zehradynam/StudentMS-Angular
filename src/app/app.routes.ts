@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Login } from './login/login'
-import { HomeComponent } from './home/home.component'
+import { Home } from './home/home'
 import { AuthGuard } from './services/auth.guard';
 import { StudentAdd } from './student-add/student-add';
 import { AccessDenied } from './access-denied/access-denied';
@@ -8,7 +8,7 @@ import { AccessDenied } from './access-denied/access-denied';
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: Login },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: Home },
   { path: 'access-denied', component: AccessDenied },
   {
     path: 'student-add',
@@ -19,7 +19,7 @@ export const routes: Routes = [
   {
     path: 'students-list',
     canActivate: [AuthGuard],
-    data: { roles: ['Admin', 'Teacher'] },
+    data: { roles: ['Admin', 'teacher'] },
     loadComponent: () =>
       import('./student-list/student-list')
         .then(m => m.StudentList)
