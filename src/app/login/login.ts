@@ -16,6 +16,7 @@ export class Login
 {
   userData: User = {} as User;
   showError = signal<boolean>(false);
+  signupError = signal<string>("");
   showSuccess = signal<boolean>(false);
   showLoginPassword = false;
   showSignupPassword = false;
@@ -28,20 +29,21 @@ export class Login
   ) { }
 
   signUp() {
-     console.log('I am In:' + JSON.stringify(this.signupData));
-  this.userService.signUp(this.signupData).subscribe({
-    next: () => {
+    console.log('Sign up attempt:', this.signupData);
+    this.showSuccess.set(false);
+    this.signupError.set('');
+    
+    this.userService.signUp(this.signupData).subscribe({
+      next: () => {
       console.log('User signed up successfully')
-      this.showSuccess.set(true);
+        this.showSuccess.set(true);
       this.showError.set(false);
-    },
-    error: (err) => {
-      console.error('User sign up failed:', err);
-      if (err.error.errors) {
-        console.error('Validation Errors:', err.error.errors);
+      },
+      error: (err) => {
+        console.error('Error:', err);
+        this.signupError.set(err.error);
       }
-    }
-  });
+    });
   }
 
 
