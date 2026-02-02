@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/users';
 import { CommonModule } from '@angular/common';
 import { AuthState } from '../services/auth-state';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,8 @@ export class Login
 
   constructor(
     private userService: UserService,
-    public authState: AuthState
+    public authState: AuthState,
+    private router: Router
   ) { }
 
   signUp() {
@@ -65,6 +66,7 @@ export class Login
           this.authState.login(res.token)
           this.showError.set(false);
           this.showSuccess.set(false);
+          this.router.navigate(['dashboard'])
 
         }
       },

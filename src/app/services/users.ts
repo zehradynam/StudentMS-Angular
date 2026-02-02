@@ -7,20 +7,24 @@ import { Injectable } from "@angular/core";
     providedIn:'root'
 })
 
-
 export class UserService {
     // private apiURL = "http://localhost:5204/api/user/login";
-    private apiURL = "https://studentms.runasp.net/api/user/login";
+    private loginURL = "https://studentms.runasp.net/api/user/login";
     private signUpURL = "https://studentms.runasp.net/api/user/signup";
+    private getUserURL = "https://studentms.runasp.net/api/user";
     
 
     constructor(private http: HttpClient) { }
 
     loginUser(user: UserModel): Observable<{ token: string }> {
-        return this.http.post<{ token: string }>(this.apiURL, user);
+        return this.http.post<{ token: string }>(this.loginURL, user);
     }
 
     signUp(user: UserModel): Observable<{ token: string }> {
         return this.http.post<{ token: string }>(this.signUpURL, user);
+    }
+
+    getUser(): Observable<UserModel> {
+        return this.http.get<UserModel>(this.getUserURL);
     }
 }
